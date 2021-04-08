@@ -13,11 +13,12 @@ bash synccsvtags.sh <csv_file> <azure_subscription_id> [EXECUTE]
 
 Example
 --------------
-```shell
 To just view the commands: 
+```shell
 bash synccsvtags.sh tags.csv 11111111-1111-1111-1111-111111111111
-
+```
 To execute the commands:
+```shell
 bash synccsvtags.sh tags.csv 11111111-1111-1111-1111-111111111111 EXECUTE
 ```
 
