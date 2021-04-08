@@ -1,4 +1,4 @@
-# Sync CSV Tags (Azure CLI Bash)
+# Sync CSV Tags (Azure CLI BASH)
 Sync Tags to Azure Resources or Resource Groups from a CSV file
 
 Usage
