@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#   usage: bash synccsvtags.sh <csv_file> <azure_subscription_id>
-# example: bash synccsvtags.sh tags.csv 11111111-1111-1111-1111-111111111111
+#   usage: bash synccsvtags.sh <csv_file> <azure_subscription_id> [EXECUTE]
+# example: bash synccsvtags.sh tags.csv 11111111-1111-1111-1111-111111111111 [EXECUTE]
 
 lines=()
 
@@ -46,7 +46,12 @@ do
 
     azclicommand="az tag create --resource-id /subscriptions/$2/resourcegroups/${tags[0]} --tags ${new_tags}"
     echo $azclicommand
-    #eval $azclicommand
+
+    if [ ! -z "$3" ] && ([ $3 == "EXECUTE" ] || [ $3 == "execute" ])
+    then
+        eval $azclicommand
+    fi
+    
     echo
 
 done
