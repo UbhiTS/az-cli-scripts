@@ -7,19 +7,19 @@ Sync Tags to Azure Resources or Resource Groups from a CSV file
 
 Usage
 ---------------
-'''
+```shell
 bash synccsvtags.sh <csv_file> <azure_subscription_id> [EXECUTE]
-'''
+```
 
 Example
 --------------
-'''
+```shell
 To just view the commands: 
 bash synccsvtags.sh tags.csv 11111111-1111-1111-1111-111111111111
 
 To execute the commands:
 bash synccsvtags.sh tags.csv 11111111-1111-1111-1111-111111111111 EXECUTE
-'''
+```
 
 Output
 ---------------
