@@ -44,7 +44,7 @@ do
 
     #echo "$line : ${tags[0]} ${new_tags}"
 
-    azclicommand="az tag create --resource-id /subscriptions/$2/resourcegroups/${tags[0]} --tags ${new_tags}"
+    azclicommand="az tag update --resource-id /subscriptions/$2/resourcegroups/${tags[0]} --operation merge --tags ${new_tags}"
     echo $azclicommand
 
     if [ ! -z "$3" ] && ([ $3 == "EXECUTE" ] || [ $3 == "execute" ])
