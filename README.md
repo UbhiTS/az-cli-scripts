@@ -2,7 +2,7 @@
 Sync Tags to Azure Resources or Resource Groups from a CSV file
 
 - one execution for all tags per resource
-- pass in any number of tags in the CSV file, it's not hardcoded :)
+- pass in any number of tags in the CSV file, it's not hardcoded (except the ResourceName header in the CSV file) :)
 - see the actual Azure CLI commands that will run before you choose to execute
 
 Usage
