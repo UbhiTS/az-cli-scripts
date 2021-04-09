@@ -1,4 +1,4 @@
-# Sync CSV Tags (Azure CLI BASH)
+# Sync CSV Tags (Azure CLI BASH or PowerShell)
 Sync Tags to Azure Resources or Resource Groups from a CSV file
 
 - one execution for all tags per resource
@@ -7,8 +7,13 @@ Sync Tags to Azure Resources or Resource Groups from a CSV file
 
 Usage
 ---------------
+Bash
 ```shell
 bash synccsvtags.sh <csv_file> <azure_subscription_id> [EXECUTE]
+```
+PowerShell
+```shell
+.\synccsvtags.ps1 <csv_file> <azure_subscription_id> [EXECUTE]
 ```
 
 Example
