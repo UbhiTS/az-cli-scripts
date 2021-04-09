@@ -5,7 +5,7 @@ $csv = Import-Csv $args[0]
 $headers = ($csv | Get-Member -MemberType NoteProperty).Name
 foreach ($row in $csv) {
     $tags = ""
-    #$csv.IndexOf($row)
+
     foreach ($header in $headers) {
         if ($header -eq "ResourceName") { continue }
         $tags = $tags + " " + $header + "=" + $row.$header
