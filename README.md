@@ -3,6 +3,23 @@
 ## Budgets
 Bulk upload budget settings for Resource Groups from a CSV file
 
+#### Usage
+---------------
+Bash
+```shell
+bash budgets.sh <csv_file> [EXECUTE]
+```
+#### Example
+--------------
+To just view the commands: 
+```shell
+bash budgets.sh budgets.csv
+```
+To execute the commands:
+```shell
+bash budgets.sh budgets.csv EXECUTE
+```
+
 ## Sync CSV Tags (Azure CLI BASH or PowerShell)
 Sync Tags to Azure Resources or Resource Groups from a CSV file
 
