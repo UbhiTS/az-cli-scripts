@@ -1,4 +1,9 @@
-# Sync CSV Tags (Azure CLI BASH or PowerShell)
+# Az CLI Scripts
+
+## Budgets
+Bulk upload budget settings for Resource Groups from a CSV file
+
+## Sync CSV Tags (Azure CLI BASH or PowerShell)
 Sync Tags to Azure Resources or Resource Groups from a CSV file
 
 - one execution for all tags per resource
