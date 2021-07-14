@@ -1,7 +1,7 @@
 #   usage: .\budgets-with-filter.ps1 <csv_file> [EXECUTE]
 # example: .\budgets-with-filter.ps1 budgets-with-filter.csv [EXECUTE]
 
-## PREPARE THE HTTP REQUEST TEMPLATE
+## PREPARE THE REQUEST TEMPLATE
 $requestUrlTemplate = "https://management.azure.com/subscriptions/{{subscriptionId}}/providers/Microsoft.Consumption/budgets/{{budgetName}}?api-version={{apiVersion}}"
 $requestBodyTemplate = @"
 {
@@ -42,7 +42,7 @@ $requestBodyTemplate = @"
 }
 "@
 
-## GET THE ACCESS TOKEN
+## GET THE ACCESS TOKEN FROM THE CURRENT CONTEXT
 $azContext = Get-AzContext
 $azProfile = [Microsoft.Azure.Commands.Common.Authentication.Abstractions.AzureRmProfileProvider]::Instance.Profile
 $profileClient = New-Object -TypeName Microsoft.Azure.Commands.ResourceManager.Common.RMProfileClient -ArgumentList ($azProfile)
@@ -56,14 +56,15 @@ $authHeader = @{
 $csv = Import-Csv $args[0]
 foreach ($row in $csv) {
 
+    ## CONSTRUCT REQUEST URL FROM TEMPLATE
     $subscriptionId = $azContext.Subscription.Id
     $apiVersion = "2019-10-01"
-
     $requestUrl = $requestUrlTemplate
     $requestUrl = $requestUrl.Replace("{{subscriptionId}}",$subscriptionId)
     $requestUrl = $requestUrl.Replace("{{budgetName}}",$row.BudgetName)
     $requestUrl = $requestUrl.Replace("{{apiVersion}}",$apiVersion)
 
+    ## CONSTRUCT REQUEST BODY FROM TEMPLATE
     $requestBody = $requestBodyTemplate
     $requestBody = $requestBody.Replace("{{amount}}",$row.Amount)
     $requestBody = $requestBody.Replace("{{startDate}}",$row.StartDate)
@@ -72,8 +73,10 @@ foreach ($row in $csv) {
     $requestBody = $requestBody.Replace("{{tagValue}}",$row.TagValue)
     $requestBody = $requestBody.Replace("{{contactEmail1}}",$row.ContactEmail1)
 
+    #echo $requestUrl
     #echo $requestBody
 
+    ## EXECUTE REQUEST
     if ("EXECUTE" -in $args -or "execute" -in $args) {
         $response = Invoke-RestMethod -Uri $requestUrl -Method Put -Headers $authHeader -Body $requestBody
         echo $response
