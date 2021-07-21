@@ -27,13 +27,23 @@ $requestBodyTemplate = @"
       ]
     },
     "notifications": {
-      "BudgetLimit": {
+      "BudgetLimit80": {
+        "enabled": true,
+        "operator": "GreaterThan",
+        "threshold": 80,
+        "locale": "en-us",
+        "contactEmails": [
+          "{{contactEmail1}}"
+        ],
+        "thresholdType": "Actual"
+      },
+      "BudgetLimit100": {
         "enabled": true,
         "operator": "GreaterThan",
         "threshold": 100,
         "locale": "en-us",
         "contactEmails": [
-          "{{contactEmail1}}"
+          "{{contactEmail2}}"
         ],
         "thresholdType": "Actual"
       }
@@ -56,6 +66,8 @@ $authHeader = @{
 $csv = Import-Csv $args[0]
 foreach ($row in $csv) {
 
+    write-host $row.BudgetName
+
     ## CONSTRUCT REQUEST URL FROM TEMPLATE
     $subscriptionId = $azContext.Subscription.Id
     $apiVersion = "2019-10-01"
@@ -72,6 +84,7 @@ foreach ($row in $csv) {
     $requestBody = $requestBody.Replace("{{tagName}}",$row.TagName)
     $requestBody = $requestBody.Replace("{{tagValue}}",$row.TagValue)
     $requestBody = $requestBody.Replace("{{contactEmail1}}",$row.ContactEmail1)
+    $requestBody = $requestBody.Replace("{{contactEmail2}}",$row.ContactEmail2)
 
     #echo $requestUrl
     #echo $requestBody
@@ -82,3 +95,5 @@ foreach ($row in $csv) {
         echo $response
     }
 }
+
+write-host 'Complete'
