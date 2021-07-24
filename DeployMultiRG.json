@@ -1,0 +1,87 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "deploymentRG": {
+            "type": "array",
+            "defaultValue": [
+                "RG1",
+                "RG2",
+                "RG3"
+            ]
+        },
+        "resourceNamePrefix": {
+            "type": "array",
+            "defaultValue": [
+                "app1",
+                "app2",
+                "app3"
+            ]
+        },
+        "envName": {
+            "type": "array",
+            "defaultValue": [
+                "dev"
+            ]
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Resources/deployments",
+            "copy": {
+                "name": "nestedDeployments",
+                "count": "[length(parameters('resourceNamePrefix'))]"
+            },
+            "apiVersion": "2021-04-01",
+            "name": "[concat(parameters('resourceNamePrefix')[copyIndex()],'metrc',parameters('envName')[0],'st01')]",
+            "resourceGroup": "[parameters('deploymentRG')[copyIndex()]]",
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "type": "Microsoft.Storage/storageAccounts",
+                            "apiVersion": "2021-04-01",
+                            "name": "[concat(parameters('resourceNamePrefix')[copyIndex()],'metrc',parameters('envName')[0],'st01')]",
+                            "location": "westus",
+                            "sku": {
+                                "name": "Standard_LRS",
+                                "tier": "Standard"
+                            },
+                            "kind": "StorageV2",
+                            "properties": {
+                                "minimumTlsVersion": "TLS1_2",
+                                "allowBlobPublicAccess": false,
+                                "allowSharedKeyAccess": true,
+                                "isHnsEnabled": true,
+                                "networkAcls": {
+                                    "bypass": "AzureServices",
+                                    "virtualNetworkRules": [],
+                                    "ipRules": [],
+                                    "defaultAction": "Allow"
+                                },
+                                "supportsHttpsTrafficOnly": true,
+                                "encryption": {
+                                    "services": {
+                                        "file": {
+                                            "keyType": "Account",
+                                            "enabled": true
+                                        },
+                                        "blob": {
+                                            "keyType": "Account",
+                                            "enabled": true
+                                        }
+                                    },
+                                    "keySource": "Microsoft.Storage"
+                                },
+                                "accessTier": "Hot"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}
