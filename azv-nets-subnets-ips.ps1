@@ -1,15 +1,15 @@
-Get-AzSubscription | Foreach-Object {
-    $sub = Set-AzContext -SubscriptionId $_.SubscriptionId
-    $vnets = Get-AzVirtualNetwork
-
-    foreach ($vnet in $vnets) {
-        [PSCustomObject]@{
-            SubscriptionName = $sub.Subscription.Name
-            VNetName = $vnet.Name
-            VNetAddressSpaces = $vnet.AddressSpace.AddressPrefixes -join ','
-        }
-    }
-} | Export-Csv -Delimiter ";" -Path "VNets.csv"
+#Get-AzSubscription | Foreach-Object {
+#    $sub = Set-AzContext -SubscriptionId $_.SubscriptionId
+#    $vnets = Get-AzVirtualNetwork
+#
+#    foreach ($vnet in $vnets) {
+#        [PSCustomObject]@{
+#            SubscriptionName = $sub.Subscription.Name
+#            VNetName = $vnet.Name
+#            VNetAddressSpaces = $vnet.AddressSpace.AddressPrefixes -join ','
+#        }
+#    }
+#} | Export-Csv -Delimiter "," -Path "VNets.csv"
 
 Get-AzSubscription | Foreach-Object {
     $sub = Set-AzContext -SubscriptionId $_.SubscriptionId
@@ -28,4 +28,4 @@ Get-AzSubscription | Foreach-Object {
             }
         }
     }
-} | Export-Csv -Delimiter ";" -Path "Subnets.csv"
+} | Export-Csv -Delimiter "," -Path "Subnets.csv"
