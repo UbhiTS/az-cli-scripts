@@ -1,0 +1,4 @@
+"TYPE","INSTANCES"
+"microsoft.compute/virtualmachines","1"
+"microsoft.web/serverfarms","2"
+"microsoft.network/virtualnetworks","3"
