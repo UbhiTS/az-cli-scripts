@@ -23,7 +23,7 @@ $csv | Foreach-Object {
         INSTANCES = $_.INSTANCES
         #ProviderNamespace = $providerNs
         #ResourceType = $resourceType
-        Locations = ((((Get-AzResourceProvider -ProviderNamespace "Microsoft.Compute").ResourceTypes | Where-Object ResourceTypeName -eq "availabilitySets").Locations | ?{$locations -contains $_}) -join ",")
+        Locations = ((((Get-AzResourceProvider -ProviderNamespace $providerNs).ResourceTypes | where ResourceTypeName -eq $resourceType).Locations | where {$locations -contains $_} | Sort-Object) -join ",")
     }
 
     $result += $data
