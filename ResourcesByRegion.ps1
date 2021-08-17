@@ -4,7 +4,7 @@
 # Run the PowerShell script with ./ResourcesByRegion.ps1
 # The results will be appended in the same input CSV file "ResourcesByRegion.csv"
 
-$locations = ("West US","West US 2","West US 3")
+$locations = ("Global","West US","West US 2","West US 3")
 $result= @()
 $csv = Import-Csv "ResourcesByRegion.csv"
 $csv | Foreach-Object {
