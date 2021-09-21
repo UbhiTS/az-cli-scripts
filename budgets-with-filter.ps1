@@ -5,50 +5,52 @@
 $requestUrlTemplate = "https://management.azure.com/subscriptions/{{subscriptionId}}/providers/Microsoft.Consumption/budgets/{{budgetName}}?api-version={{apiVersion}}"
 $requestBodyTemplate = @"
 {
-  "properties": {
-    "category": "Cost",
-    "amount": {{amount}},
-    "timeGrain": "Monthly",
-    "timePeriod": {
-      "startDate": "{{startDate}}",
-      "endDate": "{{endDate}}"
-    },
-    "filter": {
-      "and": [
-        {
-          "tags": {
-            "name": "{{tagName}}",
-            "operator": "In",
-            "values": [
-              "{{tagValue}}"
-            ]
-          }
+    "name": "{{budgetName}}",
+    "eTag": null,
+    "properties": {
+        "category": "Cost",
+        "amount": {{amount}},
+        "timeGrain": "Monthly",
+        "timePeriod": {
+            "startDate": "{{startDate}}",
+            "endDate": "{{endDate}}"
+        },
+        "notifications": {
+            "Actual_GreaterThan_80_Percent": {
+                "enabled": true,
+                "operator": "GreaterThan",
+                "threshold": 80,
+                "contactEmails": [
+                    "{{contactEmail1}}"
+                ],
+                "contactRoles": [],
+                "contactGroups": [],
+                "thresholdType": "Actual",
+                "locale": null
+            },
+            "Actual_GreaterThan_100_Percent": {
+                "enabled": true,
+                "operator": "GreaterThan",
+                "threshold": 100,
+                "contactEmails": [
+                    "{{contactEmail2}}"
+                ],
+                "contactRoles": [],
+                "contactGroups": [],
+                "thresholdType": "Actual",
+                "locale": null
+            }
+        },
+        "filter": {
+            "tags": {
+                "name": "{{tagName}}",
+                "operator": "In",
+                "values": [
+                    "{{tagValue}}"
+                ]
+            }
         }
-      ]
-    },
-    "notifications": {
-      "BudgetLimit80": {
-        "enabled": true,
-        "operator": "GreaterThan",
-        "threshold": 80,
-        "locale": "en-us",
-        "contactEmails": [
-          "{{contactEmail1}}"
-        ],
-        "thresholdType": "Actual"
-      },
-      "BudgetLimit100": {
-        "enabled": true,
-        "operator": "GreaterThan",
-        "threshold": 100,
-        "locale": "en-us",
-        "contactEmails": [
-          "{{contactEmail2}}"
-        ],
-        "thresholdType": "Actual"
-      }
     }
-  }
 }
 "@
 
@@ -78,6 +80,7 @@ foreach ($row in $csv) {
 
     ## CONSTRUCT REQUEST BODY FROM TEMPLATE
     $requestBody = $requestBodyTemplate
+    $requestBody = $requestBody.Replace("{{budgetName}}",$row.BudgetName)
     $requestBody = $requestBody.Replace("{{amount}}",$row.Amount)
     $requestBody = $requestBody.Replace("{{startDate}}",$row.StartDate)
     $requestBody = $requestBody.Replace("{{endDate}}",$row.EndDate)
