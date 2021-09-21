@@ -21,7 +21,8 @@ $requestBodyTemplate = @"
                 "operator": "GreaterThan",
                 "threshold": 80,
                 "contactEmails": [
-                    "{{contactEmail1}}"
+                    "{{contactEmail1}}",
+                    "{{contactEmail2}}"
                 ],
                 "contactRoles": [],
                 "contactGroups": [],
@@ -33,6 +34,7 @@ $requestBodyTemplate = @"
                 "operator": "GreaterThan",
                 "threshold": 100,
                 "contactEmails": [
+                    "{{contactEmail1}}",
                     "{{contactEmail2}}"
                 ],
                 "contactRoles": [],
