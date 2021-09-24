@@ -1,8 +1,5 @@
-BudgetName,Amount,StartDate,EndDate,TagName,TagValue,ContactEmail1,ContactEmail2
-FinBudget1,81,7/1/2021,7/1/2031,Dept,Finance,ubhits1@gmail.com,ubhits1@gmail.com
-AccBudget2,82,8/1/2021,8/1/2031,Area,Account,ubhits2@gmail.com,ubhits1@gmail.com
-SlsBudget3,93,9/1/2021,9/1/2031,Dept,Sales,ubhits3@gmail.com,ubhits1@gmail.com
-MktBudget4,94,10/1/2021,10/1/2031,Unit,Marketing,ubhits4@gmail.com,ubhits1@gmail.com
-MyBudget5,66,10/1/2021,10/1/2031,Name,Tarun,ubhits5@gmail.com,ubhits1@gmail.com
-My_Budget-6,68,10/1/2021,10/1/2031,Name,Anh,ubhits6@gmail.com,ubhits1@gmail.com
-MyBudget7,70,10/1/2021,10/1/2031,Department,Sales,ubhits6@gmail.com,ubhits1@gmail.com
+SubscriptionName,SubscriptionId,BudgetName,Amount,StartDate,EndDate,TagName,TagValue,ContactEmail1,ContactEmail2
+,df6dd613-8b3c-4054-a616-31395e17619b,MyBudget1,81,9/1/2021,7/1/2031,Tag1,Val1,ubhits1@gmail.com,ubhits2@gmail.com
+,df6dd613-8b3c-4054-a616-31395e17619b,MyBudget2,82,9/1/2021,8/1/2031,Tag2,Val2,ubhits3@gmail.com,ubhits4@gmail.com
+"Visual Studio Enterprise Subscription",,MyBudget3,83,9/1/2021,9/1/2031,Tag3,Val3,ubhits5@gmail.com,ubhits6@gmail.com
+"Visual Studio Enterprise Subscription",,MyBudget4,84,10/1/2021,10/1/2031,Tag4,Val4,ubhits7@gmail.com,ubhits8@gmail.com
