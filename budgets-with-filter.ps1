@@ -56,21 +56,37 @@ $requestBodyTemplate = @"
 }
 "@
 
-## GET THE ACCESS TOKEN FROM THE CURRENT CONTEXT
-$azContext = Get-AzContext
-$azProfile = [Microsoft.Azure.Commands.Common.Authentication.Abstractions.AzureRmProfileProvider]::Instance.Profile
-$profileClient = New-Object -TypeName Microsoft.Azure.Commands.ResourceManager.Common.RMProfileClient -ArgumentList ($azProfile)
-$token = $profileClient.AcquireAccessToken($azContext.Subscription.TenantId)
-$authHeader = @{
-    'Content-Type'='application/json'
-    'Authorization'='Bearer ' + $token.AccessToken
-}
+$i = 0
 
 ## READ THE CSV FILE
 $csv = Import-Csv $args[0]
 foreach ($row in $csv) {
 
-    write-host $row.BudgetName
+    $i++
+
+    write-host 'PROCESSING: Line'$i' -' $row.BudgetName ' ' -ForegroundColor Cyan
+
+    ## SET THE SUBSCRIPTION
+    if ($row.SubscriptionName -ne $null -and $row.SubscriptionName -ne "") {
+        Set-AzContext -SubscriptionName $row.SubscriptionName
+    } 
+    elseif ($row.SubscriptionId -ne $null -and $row.SubscriptionId -ne "") {
+        Set-AzContext -SubscriptionId $row.SubscriptionId
+    }
+    else {
+        write-host 'ERROR: No Subscription Name or ID given' -ForegroundColor Red
+        continue
+    }
+
+    ## GET THE ACCESS TOKEN FOR THE SUBSCRIPTION
+    $azContext = Get-AzContext
+    $azProfile = [Microsoft.Azure.Commands.Common.Authentication.Abstractions.AzureRmProfileProvider]::Instance.Profile
+    $profileClient = New-Object -TypeName Microsoft.Azure.Commands.ResourceManager.Common.RMProfileClient -ArgumentList ($azProfile)
+    $token = $profileClient.AcquireAccessToken($azContext.Subscription.TenantId)
+    $authHeader = @{
+        'Content-Type'='application/json'
+        'Authorization'='Bearer ' + $token.AccessToken
+    }
 
     ## CONSTRUCT REQUEST URL FROM TEMPLATE
     $subscriptionId = $azContext.Subscription.Id
@@ -99,6 +115,8 @@ foreach ($row in $csv) {
         $response = Invoke-RestMethod -Uri $requestUrl -Method Put -Headers $authHeader -Body $requestBody
         echo $response
     }
+
+    write-host 'COMPLETE' -ForegroundColor Green
 }
 
-write-host 'Complete'
+write-host 'FILE PROCESSED' -ForegroundColor Green
