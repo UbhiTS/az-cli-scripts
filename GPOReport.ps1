@@ -1,5 +1,5 @@
 # import reusable code
-Import-Module .\ADHelper.psm1
+Import-Module .\GPOReportHelper.psm1
 
 # create reports directory if not exists
 $WorkingDir = (Get-Location).Path
