@@ -7,7 +7,7 @@ $GPOReportsDir = "$WorkingDir\GPOReports"
 if(!(test-path -PathType container $GPOReportsDir)) { New-Item -ItemType Directory -Path $GPOReportsDir }
 
 # pull GPO information from DC
-# Get-GPOReport -All -ReportType XML -Path "$GPOReportsDir\gpo.xml"
+Get-GPOReport -All -ReportType XML -Path "$GPOReportsDir\gpo.xml"
 
 # get all xml reports generated from previous step
 $GPOReportFiles = Get-ChildItem $GPOReportsDir -Filter *.xml
