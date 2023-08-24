@@ -62,6 +62,9 @@ foreach ($GPOReportFile in $GPOReportFiles) {
 
 # $GPOComputers
 
+# export the result to a CSV file
+Write-Output("Outputting Result: GPOReport.csv")
+$GPOComputers | Export-Csv -Path GPOReport.csv -NoTypeInformation -Delimiter ',' -Force
 
 # get unique GPO names and Computer Name (to form a matrix)
 $UniqueGPOs = $GPOComputers.GPOName | Select -Unique | Sort
@@ -96,9 +99,6 @@ foreach ($UniqueGPO in $UniqueGPOs) {
 # $ResultMatrix | Format-Table -AutoSize -Wrap
 
 # export the result to a CSV file
-Write-Output("Outputting Result: GPOReport.csv")
-$GPOComputers | Export-Csv -Path GPOReport.csv -NoTypeInformation -Delimiter ',' -Force
-
 Write-Output("Outputting Result: GPOReportMatrix.csv")
 $ResultMatrix | Export-Csv -Path GPOReportMatrix.csv -NoTypeInformation -Delimiter ',' -Force
 
